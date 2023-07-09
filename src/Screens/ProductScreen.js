@@ -7,10 +7,12 @@ import {
   Pressable,
 } from "react-native";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const ProductScreen = ({navigation}) => {
+import { productSlice } from "../store/productSlice";
 
+const ProductScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
 
   return (
@@ -18,7 +20,12 @@ const ProductScreen = ({navigation}) => {
       data={products}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => navigation.navigate("Product Details", )}
+          onPress={() => {
+            //upadte selected product
+            dispatch(productSlice.actions.setSelectedProduct(item.id));
+
+            navigation.navigate("Product Details");
+          }}
           style={styles.imageContainer}
         >
           <Image
