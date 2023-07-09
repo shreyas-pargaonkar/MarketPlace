@@ -3,8 +3,8 @@ import cart from "../data/cart";
 
 const initialState = {
   items: [],
-  deliveryFee: 500,
-  freeDeliveryFrom: 10000,
+  deliveryFee: 1000,
+  freeDeliveryFrom: 15000,
 };
 
 export const cartSlice = createSlice({
