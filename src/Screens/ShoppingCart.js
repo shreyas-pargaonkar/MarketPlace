@@ -2,23 +2,31 @@ import { FlatList, Text, View, StyleSheet, Pressable } from "react-native";
 import cart from "../data/cart";
 import CartListItem from "../Components/CartListItem";
 import { useSelector } from "react-redux";
+import { selectSubTotal } from "../store/cartSlice";
+import { selectDeliveryPrice } from "../store/cartSlice";
+import { selectTotal } from "../store/cartSlice";
 
-const ShoppingCartTotals = () => (
-  <View style={styles.totalsContainer}>
-    <View style={styles.row}>
-      <Text style={styles.text}>Subtotal</Text>
-      <Text style={styles.text}> INR 35000</Text>
+const ShoppingCartTotals = () => {
+  const subtotal = useSelector(selectSubTotal);
+  const deliveryPrice = useSelector(selectDeliveryPrice);
+  const total = useSelector(selectTotal);
+  return (
+    <View style={styles.totalsContainer}>
+      <View style={styles.row}>
+        <Text style={styles.text}>Subtotal</Text>
+        <Text style={styles.text}> ₹ {subtotal} </Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Delivery</Text>
+        <Text style={styles.text}> ₹ {deliveryPrice} </Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.textBold}>Total</Text>
+        <Text style={styles.textBold}> ₹ {total} </Text>
+      </View>
     </View>
-    <View style={styles.row}>
-      <Text style={styles.text}>Delivery</Text>
-      <Text style={styles.text}> INR 500</Text>
-    </View>
-    <View style={styles.row}>
-      <Text style={styles.textBold}>Total</Text>
-      <Text style={styles.textBold}> INR 35500</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const ShoppingCart = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -29,7 +37,7 @@ const ShoppingCart = () => {
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         ListFooterComponent={<ShoppingCartTotals />}
       />
-      <Pressable  style={styles.button}>
+      <Pressable style={styles.button}>
         <Text style={styles.buttonText}>Checkout</Text>
       </Pressable>
     </>
